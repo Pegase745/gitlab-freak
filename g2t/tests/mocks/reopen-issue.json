@@ -1,0 +1,26 @@
+{
+    'object_attributes': {
+        'description': 'test',
+        'title': 'toto',
+        'url': 'http: //git.bm-jp.fr/pegase/testing-g2t/issues/3',
+        'created_at': '2015-08-2509: 37: 18UTC',
+        'updated_at': '2015-08-2509: 54: 01UTC',
+        'iid': 3,
+        'assignee_id': 2,
+        'branch_name': None,
+        'state': 'reopened',
+        'updated_by_id': None,
+        'action': 'reopen',
+        'position': 0,
+        'author_id': 2,
+        'project_id': 18,
+        'milestone_id': None,
+        'id': 3
+    },
+    'object_kind': 'issue',
+    'user': {
+        'username': 'pegase',
+        'avatar_url': 'http: //git.bm-jp.fr/uploads/user/avatar/2/20881_10153239388730883_6991307538850699433_n.jpg',
+        'name': 'Mich'
+    }
+}
