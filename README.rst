@@ -13,8 +13,7 @@ Install dependencies
 
     $ mkvirtualenv gitlab_freak
     $ workon gitlab_freak
-    (gitlab_freak)$ pip install -r requirements.txt
-    (gitlab_freak)$ pyhon setup.py dgitlab_freakevelop
+    (gitlab_freak)$ python setup.py gitlab_freak develop
 
 Initialize database model
 =========================

@@ -15,6 +15,9 @@ if sys.argv[-1] == 'publish':
 readme = open('README.rst').read()
 changelog = open('CHANGELOG.rst').read().replace('.. :changelog:', '')
 
+with open('requirements.txt') as f:
+    required = f.read().splitlines()
+
 
 class PyTest(TestCommand):
 
@@ -47,8 +50,7 @@ setup(
     cmdclass={'test': PyTest},
     package_dir={'gitlab_freak': 'gitlab_freak'},
     include_package_data=True,
-    install_requires=[
-    ],
+    install_requires=required,
     license="MIT",
     zip_safe=False,
     keywords='gitlab trello',
