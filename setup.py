@@ -29,23 +29,23 @@ class PyTest(TestCommand):
         sys.exit(errcode)
 
 setup(
-    name='gitlab-to-trello',
+    name='gitlab-freak',
     version='1.0.0-alpha',
     description='A Flask server that allows you to interact \
         with Trello from your own Gitlab.',
     long_description=readme + '\n\n' + changelog,
     author='Michel Nemnom',
     author_email='michel.nemnom+pypi@gmail.com',
-    url='https://github.com/Pegase745/gitlab-to-trello',
+    url='https://github.com/Pegase745/gitlab-freak',
     packages=[
-        'g2t',
+        'gitlab_freak',
     ],
     scripts=[
-        'g2t/scripts/g2t-run.py',
-        'g2t/scripts/g2t-init-db.py',
+        'gitlab_freak/scripts/gitlab-freak-run.py',
+        'gitlab_freak/scripts/gitlab-freak-init-db.py',
     ],
     cmdclass={'test': PyTest},
-    package_dir={'g2t': 'g2t'},
+    package_dir={'gitlab_freak': 'gitlab_freak'},
     include_package_data=True,
     install_requires=[
     ],

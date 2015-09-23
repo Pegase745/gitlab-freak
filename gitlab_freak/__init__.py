@@ -1,4 +1,4 @@
-"""Gitlab to Trello views."""
+"""Gitlab Freak views."""
 from __future__ import absolute_import, unicode_literals
 import logging
 from logging.handlers import RotatingFileHandler
@@ -7,11 +7,11 @@ from flask import Flask, request, render_template, redirect
 import gitlab
 from trello import TrelloApi
 
-from g2t.models import db, ProjectHasBoard, IssueHasCard
-from g2t.helpers import get_or_create
+from gitlab_freak.models import db, ProjectHasBoard, IssueHasCard
+from gitlab_freak.helpers import get_or_create
 
 app = Flask(__name__)
-app.config.from_envvar('G2T_SETTINGS')
+app.config.from_envvar('GITLAB_FREAK_SETTINGS')
 db.init_app(app)
 
 trello = TrelloApi(app.config['TRELLO_APPKEY'], app.config['TRELLO_TOKEN'])

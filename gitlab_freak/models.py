@@ -1,4 +1,4 @@
-"""Gitlab to Trello database models."""
+"""Gitlab Freak database models."""
 import datetime
 from flask.ext.sqlalchemy import SQLAlchemy
 
