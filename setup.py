@@ -30,7 +30,7 @@ class PyTest(TestCommand):
 
 setup(
     name='gitlab-to-trello',
-    version='0.0.0',
+    version='1.0.0-alpha',
     description='A Flask server that allows you to interact \
         with Trello from your own Gitlab.',
     long_description=readme + '\n\n' + changelog,
@@ -53,7 +53,7 @@ setup(
     zip_safe=False,
     keywords='gitlab trello',
     classifiers=[
-        'Development Status :: 1 - Planning',
+        'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
