@@ -12,6 +12,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://www.bootstrap-switch.org/dist/css/bootstrap3/bootstrap-switch.css" rel="stylesheet">
 
     <style type="text/css">
       body {
@@ -34,7 +35,7 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#">Gitlab Freak Trello linker</a>
+          <a class="navbar-brand" href="#">Gitlab Freak</a>
         </div>
       </div>
     </nav>
@@ -44,22 +45,51 @@
         <div class="col-lg-12">
           {% for project in projects %}
             <div class="row project">
-              <div class="col-lg-8">
-                <strong>{{ project.name_with_namespace }}</strong>
-                <p><small>{{ project.web_url }}</small></p>
-              </div>
-              <div class="col-lg-4">
-                <form class="form-inline pull-right" action="{{ url_for('home') }}" method="POST" enctype="application/x-www-form-urlencoded">
-                  <div class="form-group">
-                    <input type="hidden" name="project-id" value="{{ project.id }}">
-                    <select name="board-id" class="form-control">
-                      {% for board in boards %}
-                        <option value="{{ board.id }}">{{ board.name }}</option>
-                      {% endfor %}
-                    </select>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <a href="{{ project.web_url }}" target="_blank"><strong>{{ project.path_with_namespace }}</strong></a>
+                  <span class="pull-right label label-success">{{ project.project_type }}</span>
+                </div>
+                <div class="panel-body">
+                  <div class="col-md-1">
+                    <a href="#" class="thumbnail">
+                        {% if project.avatar_url %}
+                          <img src="{{ project.avatar_url }}" >
+                        {% else %}
+                          <img src="{{ url_for('static', filename='gitlab_logo.svg') }}" >
+                        {% endif %}
+                    </a>
                   </div>
-                  <button type="submit" class="btn btn-success">Link</button>
-                </form>
+                  <div class="col-md-7">
+                    <p>{{ project.description }}</p>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <form class="form-inline pull-right" action="{{ url_for('home') }}" method="POST" enctype="application/x-www-form-urlencoded">
+                        <div class="form-group">
+                          <input type="hidden" name="project-id" value="{{ project.id }}">
+                          <div class="input-group">
+                            <div class="input-group-addon">Trello board</div>
+                            <select name="board-id" class="form-control">
+                              {% for board in boards %}
+                                <option value="{{ board.id }}">{{ board.name }}</option>
+                              {% endfor %}
+                            </select>
+                          </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Link</button>
+                      </form>
+                    </div>
+                    {% if project.project_type %}
+                      <br/>
+                      <div class="row">
+                        <span class="pull-right">
+                          <input type="checkbox" name="my-checkbox">
+                        </span>
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
               </div>
             </div>
           {% endfor %}
@@ -74,6 +104,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="http://www.bootstrap-switch.org/dist/js/bootstrap-switch.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
   </body>
 </html>
 

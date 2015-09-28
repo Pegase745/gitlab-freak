@@ -49,6 +49,21 @@ def home():
     # Get all gitlab projects
     projects = git.getprojects()
 
+    if not projects:
+        return render_template('index.html')
+
+    # Check for package.json at project root
+    for project in projects:
+        # Add flag to project dict to show project type
+        if (git.getfile(project['id'], 'package.json',
+            project['default_branch'])):
+            # Node.js project
+            project['project_type'] = 'nodejs'
+        elif (git.getfile(project['id'], 'setup.py',
+              project['default_branch'])):
+            # Python project
+            project['project_type'] = 'python'
+
     # Get all Trello boards
     token_username = trello.tokens.get_member(
         app.config['TRELLO_TOKEN']).get('username')
