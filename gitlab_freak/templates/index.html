@@ -71,8 +71,9 @@
                           <div class="input-group">
                             <div class="input-group-addon">Trello board</div>
                             <select name="board-id" class="form-control">
+                              <option value="none"></option>
                               {% for board in boards %}
-                                <option value="{{ board.id }}">{{ board.name }}</option>
+                                <option value="{{ board.id }}" {% if board.id == project.board_id %} selected {% endif %}>{{ board.name }}</option>
                               {% endfor %}
                             </select>
                           </div>

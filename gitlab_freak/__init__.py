@@ -3,6 +3,7 @@ from __future__ import absolute_import, unicode_literals
 import logging
 from logging.handlers import RotatingFileHandler
 from flask import Flask, request, render_template, redirect
+from sqlalchemy.orm.exc import NoResultFound
 
 import gitlab
 from trello import TrelloApi
@@ -63,6 +64,13 @@ def home():
               project['default_branch'])):
             # Python project
             project['project_type'] = 'python'
+
+        # Check if project is already linked to a board
+        try:
+            phb = ProjectHasBoard.by_project(project['id'])
+            project['board_id'] = phb.board_id
+        except NoResultFound:
+            app.logger.warn('Project %s has no board linked' % project['id'])
 
     # Get all Trello boards
     token_username = trello.tokens.get_member(
