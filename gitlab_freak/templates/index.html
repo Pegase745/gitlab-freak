@@ -85,7 +85,8 @@
                       <br/>
                       <div class="row">
                         <span class="pull-right">
-                          <input type="checkbox" name="my-checkbox">
+                            <input type="checkbox" name="dep-checkbox" data-id="{{ project.id }}" data-type="{{ project.project_type }}"
+                            {% if project.is_monitored %} checked {% endif %}>
                         </span>
                       </div>
                     {% endif %}

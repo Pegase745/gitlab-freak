@@ -8,8 +8,8 @@ from sqlalchemy.orm.exc import NoResultFound
 import gitlab
 from trello import TrelloApi
 
-from gitlab_freak.models import db, ProjectHasBoard, IssueHasCard
-from gitlab_freak.helpers import get_or_create
+from gitlab_freak.models import db, ProjectHasBoard, IssueHasCard, ProjectDependency
+from gitlab_freak.helpers import get_or_create, nodeDepsFetcher, nodeLatestVersion
 
 app = Flask(__name__)
 app.config.from_envvar('GITLAB_FREAK_SETTINGS')
@@ -72,12 +72,28 @@ def home():
         except NoResultFound:
             app.logger.warn('Project %s has no board linked' % project['id'])
 
+        # Check if project is already monitored
+        if project.get('project_type'):
+            try:
+                is_monitored = ProjectDependency.is_monitored(project['id'])
+                if is_monitored:
+                    project['is_monitored'] = 'True'
+            except Exception, e:
+                app.logger.error(e)
+
     # Get all Trello boards
     token_username = trello.tokens.get_member(
         app.config['TRELLO_TOKEN']).get('username')
     boards = trello.members.get_board(token_username)
 
     return render_template('index.html', projects=projects, boards=boards)
+
+
+@app.route('/dependencies/<int:project_id>', methods=['GET'])
+def dependencies(project_id):
+    """Page showing status of a project dependencies."""
+
+    return render_template('dependencies.html')
 
 
 @app.route('/dispatch', methods=['POST'])
@@ -121,6 +137,45 @@ def dispatcher():
         app.logger.warn('Kind %s with action %s not yet taken care of'
                         % (kind, content.get('action')))
     return "OK"  # or other thing
+
+
+@app.route('/register', methods=['POST'])
+def register():
+    """Register a project for dependency monitoring."""
+    data = request.json
+    project_id = data.get('project_id')
+    project_type = data.get('project_type')
+
+    # Fetch dependenies from repository
+    dependencies = {
+        'nodejs' : nodeDepsFetcher,
+    }
+
+    try:
+        deps = dependencies[project_type](project_id)
+    except Exception, e:
+        app.logger.error(e)
+ 
+    if deps:
+        return "OK" # or other thing
+
+@app.route('/unregister', methods=['POST'])
+def unregister():
+    """Unregister a project for dependency monitoring."""
+    data = request.json
+    project_id = data.get('project_id')
+
+    try:
+        delDeps = db.session.query(ProjectDependency)\
+            .filter_by(project_id=project_id)\
+            .delete(synchronize_session=False)
+        db.session.commit()
+    except Exception, e:
+        app.logger.error(e)
+        db.session.rollback()
+ 
+    if delDeps:
+        return "OK" # or other thing
 
 if __name__ == "__main__":
     handler = RotatingFileHandler(
