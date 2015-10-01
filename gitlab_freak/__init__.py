@@ -92,8 +92,9 @@ def home():
 @app.route('/dependencies/<int:project_id>', methods=['GET'])
 def dependencies(project_id):
     """Page showing status of a project dependencies."""
+    dependencies = ProjectDependency.by_project(project_id)
 
-    return render_template('dependencies.html')
+    return render_template('dependencies.html', dependencies=dependencies)
 
 
 @app.route('/dispatch', methods=['POST'])

@@ -3,3 +3,4 @@ Jinja2==2.8
 Flask-SQLAlchemy==2.0
 pyapi-gitlab==7.8.4
 trello==0.9.1
+requests==2.7.0

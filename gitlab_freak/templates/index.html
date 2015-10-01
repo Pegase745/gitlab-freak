@@ -35,7 +35,7 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#">Gitlab Freak</a>
+            <a class="navbar-brand" href="{{ url_for('home') }}">Gitlab Freak</a>
         </div>
       </div>
     </nav>
@@ -85,8 +85,13 @@
                       <br/>
                       <div class="row">
                         <span class="pull-right">
-                            <input type="checkbox" name="dep-checkbox" data-id="{{ project.id }}" data-type="{{ project.project_type }}"
-                            {% if project.is_monitored %} checked {% endif %}>
+                          <input type="checkbox" name="dep-checkbox" data-id="{{ project.id }}" data-type="{{ project.project_type }}"
+                          {% if project.is_monitored %} checked {% endif %}>
+                          {% if project.is_monitored %}
+                            <a href="{{ url_for('dependencies', project_id=project.id) }}">
+                                <small><span class="muted">Show</span></small>
+                            </a>
+                          {% endif %}
                         </span>
                       </div>
                     {% endif %}
