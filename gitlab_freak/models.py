@@ -76,8 +76,8 @@ class ProjectDependency(db.Model):
     status = db.Column(db.Unicode(10), nullable=True)
 
     created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.datetime.utcnow, 
-            onupdate=datetime.datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.datetime.utcnow,
+                           onupdate=datetime.datetime.utcnow)
 
     @classmethod
     def is_monitored(cls, project):

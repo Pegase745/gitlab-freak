@@ -28,10 +28,11 @@ def get_or_create(session, model, defaults=None, **kwargs):
         session.add(instance)
         return instance, True
 
+
 def nodeLatestVersion(dependency, project_id):
     r = requests.get('%s%s/latest' % (app.config['NPM_REGISTRY'], dependency))
     latestVersion = r.json().get('version')
-    
+
     try:
         dep = ProjectDependency.by_project(project_id, dependency)
         dep.latest_version = latestVersion
@@ -44,12 +45,13 @@ def nodeLatestVersion(dependency, project_id):
         app.logger.error(e)
         db.session.rollback()
 
+
 def nodeDepsFetcher(project_id):
     # Get dependencies from package.json
     project = git.getproject(project_id)
 
     depFileEncoded = git.getfile(project_id, 'package.json',
-            project['default_branch'])
+                                 project['default_branch'])
 
     # Decode from base64
     deps = json.loads(depFileEncoded.get('content').decode('base64'))
@@ -61,22 +63,24 @@ def nodeDepsFetcher(project_id):
     # TODO create single function for that
     for mDep, mVersion in list(mainDeps.items()):
         mdep, created = get_or_create(db.session, ProjectDependency,
-            project_id=project_id, name=mDep, actual_version=mVersion)
+                                      project_id=project_id, name=mDep,
+                                      actual_version=mVersion)
 
         if not created:
             app.logger.info('[%s] Dep %s already exist' % (project_id, mDep))
-        
-        db.session.commit() 
+
+        db.session.commit()
         nodeLatestVersion(mDep, project_id)
 
     for devDep, devVersion in list(devDeps.items()):
         ddep, created = get_or_create(db.session, ProjectDependency,
-            project_id=project_id, name=devDep, actual_version=devVersion,
-            dev=True)
+                                      project_id=project_id, name=devDep,
+                                      actual_version=devVersion, dev=True)
 
         if not created:
-            app.logger.info('[%s] Dev dep %s already exist' % (project_id, devDep))
-        
+            app.logger.info('[%s] Dev dep %s already exist' %
+                            (project_id, devDep))
+
         db.session.commit()
         nodeLatestVersion(devDep, project_id)
     return True

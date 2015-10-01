@@ -8,8 +8,13 @@ from sqlalchemy.orm.exc import NoResultFound
 import gitlab
 from trello import TrelloApi
 
-from gitlab_freak.models import db, ProjectHasBoard, IssueHasCard, ProjectDependency
-from gitlab_freak.helpers import get_or_create, nodeDepsFetcher, nodeLatestVersion
+from gitlab_freak.models import (
+    db,
+    ProjectHasBoard,
+    IssueHasCard,
+    ProjectDependency
+)
+from gitlab_freak.helpers import get_or_create, nodeDepsFetcher
 
 app = Flask(__name__)
 app.config.from_envvar('GITLAB_FREAK_SETTINGS')
@@ -57,11 +62,11 @@ def home():
     for project in projects:
         # Add flag to project dict to show project type
         if (git.getfile(project['id'], 'package.json',
-            project['default_branch'])):
+                        project['default_branch'])):
             # Node.js project
             project['project_type'] = 'nodejs'
         elif (git.getfile(project['id'], 'setup.py',
-              project['default_branch'])):
+                          project['default_branch'])):
             # Python project
             project['project_type'] = 'python'
 
@@ -152,16 +157,17 @@ def register():
 
     # Fetch dependenies from repository
     dependencies = {
-        'nodejs' : nodeDepsFetcher,
+        'nodejs': nodeDepsFetcher,
     }
 
     try:
         deps = dependencies[project_type](project_id)
     except Exception, e:
         app.logger.error(e)
- 
+
     if deps:
-        return "OK" # or other thing
+        return "OK"  # or other thing
+
 
 @app.route('/unregister', methods=['POST'])
 def unregister():
@@ -177,9 +183,9 @@ def unregister():
     except Exception, e:
         app.logger.error(e)
         db.session.rollback()
- 
+
     if delDeps:
-        return "OK" # or other thing
+        return "OK"  # or other thing
 
 if __name__ == "__main__":
     handler = RotatingFileHandler(
