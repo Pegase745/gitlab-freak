@@ -33,7 +33,7 @@ class PyTest(TestCommand):
 
 setup(
     name='gitlab-freak',
-    version='1.0.0-alpha',
+    version='1.0.0-alpha.1',
     description='A Flask server that allows you to interact \
         with Trello from your own Gitlab.',
     long_description=readme + '\n\n' + changelog,

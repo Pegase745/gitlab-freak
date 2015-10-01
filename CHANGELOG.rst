@@ -3,15 +3,15 @@
 Changelog
 ---------
 
-1.0.0-alpha.1 (2X-09-2015)
+1.0.0-alpha.1 (01-10-2015)
 ++++++++++++++++++++++++++
 
 * Rename gitlab-to-trello into gitlab-freak.
-
-* Choose a Gitlab project (Node.js only) for which dependencies update monitoring is wanted.
+* Choose a Gitlab Node.js project for which dependencies update monitoring is wanted.
 * Get dependencies from `package.json`.
-* Fetch twice a day for dependencies new versions on npm registry (the official one or your own mirror).
+* Fetch dependencies latest versions on a npm registry.
 * List dependencies versions status on a webpage.
+* Fix dispatcher to commit in database, and show issue link in card comment.
 
 
 1.0.0-alpha (26-08-2015)
