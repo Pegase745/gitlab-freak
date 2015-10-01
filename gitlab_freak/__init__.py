@@ -119,7 +119,7 @@ def dispatcher():
             '#%s %s' % (
                 content.get('iid'), content.get('title')),
             opening_list.get('id'),
-            content.get('description'))
+            '%s \n\n %s' % (content.get('description'), content.get('url')))
 
         # create link between a card and an issue
         ilink, created = get_or_create(
@@ -133,10 +133,13 @@ def dispatcher():
                 'Created Trello card -> %s' % card.get('shortUrl'))
     elif (kind in 'issue') and (content.get('action') in 'close'):
         # when closing an issue, move a Trello card to the closing column
-        pass
+        app.logger.warn('Kind %s with action %s not yet taken care of'
+                        % (kind, content.get('action')))
     else:
         app.logger.warn('Kind %s with action %s not yet taken care of'
                         % (kind, content.get('action')))
+
+    db.session.commit()
     return "OK"  # or other thing
 
 
