@@ -7,7 +7,7 @@
             event.preventDefault();
             var data = {
                 "project_id": $(this).data("id"),
-                "project_type": $(this).data("type"), 
+                "project_type": $(this).data("type"),
             };
 
             var url = "/register";

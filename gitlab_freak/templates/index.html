@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Gitlab Freak</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
-    <link href="http://www.bootstrap-switch.org/dist/css/bootstrap3/bootstrap-switch.css" rel="stylesheet">
-
-    <style type="text/css">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for HTML5 for Linux version 5.1.14">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content=
+  "width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Gitlab Freak</title><!-- Bootstrap core CSS -->
+  <link href=
+  "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
+  rel="stylesheet">
+  <link href=
+  "http://www.bootstrap-switch.org/dist/css/bootstrap3/bootstrap-switch.css"
+  rel="stylesheet">
+  <style type="text/css">
       body {
         padding-top: 70px;
       }
@@ -22,97 +25,106 @@
       .project {
         margin-top: 10px;
       }
-    </style>
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
+  </style>
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-  </head>
-
-  <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="{{ url_for('home') }}">Gitlab Freak</a>
-        </div>
-      </div>
-    </nav>
-
+</head>
+<body>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          {% for project in projects %}
-            <div class="row project">
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <a href="{{ project.web_url }}" target="_blank"><strong>{{ project.path_with_namespace }}</strong></a>
-                  <span class="pull-right label label-success">{{ project.project_type }}</span>
-                </div>
-                <div class="panel-body">
-                  <div class="col-md-1">
-                    <a href="#" class="thumbnail">
-                        {% if project.avatar_url %}
-                          <img src="{{ project.avatar_url }}" >
-                        {% else %}
-                          <img src="{{ url_for('static', filename='gitlab_logo.svg') }}" >
-                        {% endif %}
-                    </a>
-                  </div>
-                  <div class="col-md-7">
-                    <p>{{ project.description }}</p>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="row">
-                      <form class="form-inline pull-right" action="{{ url_for('home') }}" method="POST" enctype="application/x-www-form-urlencoded">
-                        <div class="form-group">
-                          <input type="hidden" name="project-id" value="{{ project.id }}">
-                          <div class="input-group">
-                            <div class="input-group-addon">Trello board</div>
-                            <select name="board-id" class="form-control">
-                              <option value="none"></option>
-                              {% for board in boards %}
-                                <option value="{{ board.id }}" {% if board.id == project.board_id %} selected {% endif %}>{{ board.name }}</option>
-                              {% endfor %}
-                            </select>
-                          </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Link</button>
-                      </form>
-                    </div>
-                    {% if project.project_type %}
-                      <br/>
-                      <div class="row">
-                        <span class="pull-right">
-                          <input type="checkbox" name="dep-checkbox" data-id="{{ project.id }}" data-type="{{ project.project_type }}"
-                          {% if project.is_monitored %} checked {% endif %}>
-                          {% if project.is_monitored %}
-                            <a href="{{ url_for('dependencies', project_id=project.id) }}">
-                                <small><span class="muted">Show</span></small>
-                            </a>
-                          {% endif %}
-                        </span>
+      <div class="navbar-header">
+        <a class="navbar-brand"
+        href="{{ url_for('home') }}">Gitlab Freak</a>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        {% for project in projects %}
+        <div class="row project">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <a href="{{ project.web_url }}" target=
+              "_blank"><strong>{{ project.path_with_namespace
+              }}</strong></a> <span class=
+              "pull-right label label-success">{{
+              project.project_type }}</span>
+            </div>
+            <div class="panel-body">
+              <div class="col-md-1">
+                <a href="#" class="thumbnail">{% if
+                project.avatar_url %} <img src=
+                "{{ project.avatar_url }}"> {% else %}
+                <img src="{{ url_for('static', filename='gitlab_logo.svg') }}">
+                 {% endif %}</a>
+              </div>
+              <div class="col-md-7">
+                <p>{{ project.description }}</p>
+              </div>
+              <div class="col-md-4">
+                <div class="row">
+                  <form class="form-inline pull-right" action=
+                  "{{ url_for('home') }}" method="post"
+                  enctype="application/x-www-form-urlencoded">
+                    <div class="form-group">
+                      <input type="hidden" name="project-id" value=
+                      "{{ project.id }}">
+                      <div class="input-group">
+                        <div class="input-group-addon">
+                          Trello board
+                        </div><select name="board-id" class=
+                        "form-control">
+                          <option value="none">
+                            </option>
+                          <option value="{{ board.id }}" if=""
+                          board.id="=" project.board_id="" selected
+                          endif="">
+                            {{ board.name }}
+                          </option>
+                        </select>
                       </div>
-                    {% endif %}
-                  </div>
-                </div>
+                    </div><button type="submit" class=
+                    "btn btn-primary">Link</button>
+                  </form>
+                </div>{% if project.project_type %}<br>
+                <div class="row">
+                  <span class="pull-right"><input type="checkbox"
+                  name="dep-checkbox" data-id="{{ project.id }}"
+                  data-type="{{ project.project_type }}" if=""
+                  project.is_monitored="" checked endif=""> {% if
+                  project.is_monitored %} <a href=
+                  "{{ url_for('dependencies', project_id=project.id) }}">
+                  <small><span class=
+                  "muted">Show</span></small></a> {% endif
+                  %}</span>
+                </div>{% endif %}
               </div>
             </div>
-          {% endfor %}
-        </div>
+          </div>
+        </div>{% endfor %}
       </div>
-    </div><!-- /.container -->
-
-
-    <!-- Bootstrap core JavaScript
+    </div>
+  </div><!-- /.container -->
+  <!-- Bootstrap core JavaScript
     ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
-    <script src="http://www.bootstrap-switch.org/dist/js/bootstrap-switch.js"></script>
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-  </body>
-</html>
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src=
+  "https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
+  </script>
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 
+  <script src=
+  "http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js">
+  </script>
+  <script src=
+  "http://www.bootstrap-switch.org/dist/js/bootstrap-switch.js">
+  </script>
+  <script src=
+  "{{ url_for('static', filename='js/main.js') }}">
+  </script>
+</body>
+</html>
