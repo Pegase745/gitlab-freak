@@ -1,5 +1,5 @@
 Flask==0.10.1
-Jinja2==2.8
+Jinja2==2.11.3
 Flask-SQLAlchemy==2.0
 pyapi-gitlab==7.8.4
 trello==0.9.1
